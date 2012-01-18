@@ -9,7 +9,7 @@
  * governing permissions and limitations under the License.
  */
 
-package com.yourcompany.yoursetting.ui;
+package org.nullie.localemorelocale.ui;
 
 import java.util.Locale;
 
@@ -26,9 +26,9 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.twofortyfouram.locale.BreadCrumber;
-import com.yourcompany.yoursetting.R;
-import com.yourcompany.yoursetting.bundle.BundleScrubber;
-import com.yourcompany.yoursetting.bundle.PluginBundleManager;
+import org.nullie.localemorelocale.R;
+import org.nullie.localemorelocale.bundle.BundleScrubber;
+import org.nullie.localemorelocale.bundle.PluginBundleManager;
 
 /**
  * This is the "Edit" activity for a Locale Plug-in.

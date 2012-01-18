@@ -9,7 +9,7 @@
  * governing permissions and limitations under the License.
  */
 
-package com.yourcompany.yoursetting.receiver;
+package org.nullie.localemorelocale.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,10 +17,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.yourcompany.yoursetting.Constants;
-import com.yourcompany.yoursetting.bundle.BundleScrubber;
-import com.yourcompany.yoursetting.bundle.PluginBundleManager;
-import com.yourcompany.yoursetting.ui.EditActivity;
+import org.nullie.localemorelocale.Constants;
+import org.nullie.localemorelocale.bundle.BundleScrubber;
+import org.nullie.localemorelocale.bundle.PluginBundleManager;
+import org.nullie.localemorelocale.ui.EditActivity;
 
 /**
  * This is the "fire" BroadcastReceiver for a Locale Plug-in setting.

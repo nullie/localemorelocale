@@ -9,7 +9,7 @@
  * governing permissions and limitations under the License.
  */
 
-package com.yourcompany.yoursetting.bundle;
+package org.nullie.localemorelocale.bundle;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -9,12 +9,12 @@
  * governing permissions and limitations under the License.
  */
 
-package com.yourcompany.yoursetting.bundle;
+package org.nullie.localemorelocale.bundle;
 
 import android.os.Bundle;
 import android.util.Log;
 
-import com.yourcompany.yoursetting.Constants;
+import org.nullie.localemorelocale.Constants;
 
 /**
  * Class for managing the {@link com.twofortyfouram.locale.Intent#EXTRA_BUNDLE} for this plug-in.
