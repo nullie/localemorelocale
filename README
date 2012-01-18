@@ -1,0 +1,5 @@
+This application allows changing system locale from Tasker/Locale.
+I created it to run Yandex Maps in Russian locale, and rest of
+Android in English.
+
+It requires both Tasker/Locale and More Locale 2.
