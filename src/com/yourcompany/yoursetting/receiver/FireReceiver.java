@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.yourcompany.yoursetting.Constants;
 import com.yourcompany.yoursetting.bundle.BundleScrubber;
@@ -72,13 +71,11 @@ public final class FireReceiver extends BroadcastReceiver
 
             Intent morelocaleintent = new Intent("jp.co.c_lis.ccl.morelocale.CHANGE_LOCALE");
 
-            morelocaleintent.putExtra("LOCALE_LANGUAGE", "ru");
-            morelocaleintent.putExtra("LOCALE_COUNTRY", "RU");
-            morelocaleintent.putExtra("LOCALE_VARIANT", "");
+            morelocaleintent.putExtra("LOCALE_LANGUAGE", bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_LANGUAGE));
+            morelocaleintent.putExtra("LOCALE_COUNTRY", bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_COUNTRY));
+            morelocaleintent.putExtra("LOCALE_VARIANT", bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_VARIANT));
 
             context.sendBroadcast(morelocaleintent);
-
-            Toast.makeText(context, bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE), Toast.LENGTH_LONG).show();
         }
     }
 }

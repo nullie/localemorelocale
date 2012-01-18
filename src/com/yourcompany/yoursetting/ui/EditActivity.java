@@ -11,6 +11,8 @@
 
 package com.yourcompany.yoursetting.ui;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -84,7 +86,9 @@ public final class EditActivity extends Activity
 
             if (PluginBundleManager.isBundleValid(forwardedBundle))
             {
-                ((EditText) findViewById(R.id.message)).setText(forwardedBundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE));
+                ((EditText) findViewById(R.id.language)).setText(forwardedBundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_LANGUAGE));
+                ((EditText) findViewById(R.id.country)).setText(forwardedBundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_COUNTRY));
+                ((EditText) findViewById(R.id.variant)).setText(forwardedBundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_VARIANT));
             }
         }
         /*
@@ -105,48 +109,41 @@ public final class EditActivity extends Activity
         }
         else
         {
-            final String message = ((EditText) findViewById(R.id.message)).getText().toString();
+            final String language = ((EditText) findViewById(R.id.language)).getText().toString();
+            final String country = ((EditText) findViewById(R.id.country)).getText().toString();
+            final String variant = ((EditText) findViewById(R.id.variant)).getText().toString();
 
             /*
-             * If the message is of 0 length, then there isn't a setting to save.
+             * This is the return Intent, into which we'll put all the required extras
              */
-            if (0 == message.length())
-            {
-                setResult(RESULT_CANCELED);
-            }
-            else
-            {
-                /*
-                 * This is the return Intent, into which we'll put all the required extras
-                 */
-                final Intent returnIntent = new Intent();
+            final Intent returnIntent = new Intent();
 
-                /*
-                 * This extra is the data to ourselves: either for the Activity or the BroadcastReceiver. Note that anything
-                 * placed in this Bundle must be available to Locale's class loader. So storing String, int, and other standard
-                 * objects will work just fine. However Parcelable objects must also be Serializable. And Serializable objects
-                 * must be standard Java objects (e.g. a private subclass to this plug-in cannot be stored in the Bundle, as
-                 * Locale's classloader will not recognize it).
-                 */
-                final Bundle returnBundle = new Bundle();
-                returnBundle.putString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE, message);
+            /*
+             * This extra is the data to ourselves: either for the Activity or the BroadcastReceiver. Note that anything
+             * placed in this Bundle must be available to Locale's class loader. So storing String, int, and other standard
+             * objects will work just fine. However Parcelable objects must also be Serializable. And Serializable objects
+             * must be standard Java objects (e.g. a private subclass to this plug-in cannot be stored in the Bundle, as
+             * Locale's classloader will not recognize it).
+             */
+            final Bundle returnBundle = new Bundle();
+            
+            returnBundle.putString(PluginBundleManager.BUNDLE_EXTRA_STRING_LANGUAGE, language);
+            returnBundle.putString(PluginBundleManager.BUNDLE_EXTRA_STRING_COUNTRY, country);
+            returnBundle.putString(PluginBundleManager.BUNDLE_EXTRA_STRING_VARIANT, variant);
 
-                returnIntent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_BUNDLE, returnBundle);
+            returnIntent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_BUNDLE, returnBundle);
 
-                /*
-                 * This is the blurb concisely describing what your setting's state is. This is simply used for display in the UI.
-                 */
-                if (message.length() > getResources().getInteger(R.integer.twofortyfouram_locale_maximum_blurb_length))
-                {
-                    returnIntent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, message.substring(0, getResources().getInteger(R.integer.twofortyfouram_locale_maximum_blurb_length)));
-                }
-                else
-                {
-                    returnIntent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, message);
-                }
+            String blurb = (new Locale(language, country, variant)).toString();
+            
+            if(blurb.length() > getResources().getInteger(R.integer.twofortyfouram_locale_maximum_blurb_length))
+            	blurb = blurb.substring(0, getResources().getInteger(R.integer.twofortyfouram_locale_maximum_blurb_length));
+            
+            /*
+             * This is the blurb concisely describing what your setting's state is. This is simply used for display in the UI.
+             */
+            returnIntent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, blurb);
 
-                setResult(RESULT_OK, returnIntent);
-            }
+            setResult(RESULT_OK, returnIntent);
         }
 
         super.finish();

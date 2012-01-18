@@ -16,4 +16,7 @@
     <string name="app_name">Locale More Locale Plugin</string>
     <string name="plugin_name">More Locale</string>
     <string name="message_hint">Switch Locale</string>
+    <string name="language">Language</string>
+    <string name="country">Country</string>
+    <string name="variant">Variant</string>
 </resources>

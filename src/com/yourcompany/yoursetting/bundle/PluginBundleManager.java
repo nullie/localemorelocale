@@ -12,7 +12,6 @@
 package com.yourcompany.yoursetting.bundle;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.yourcompany.yoursetting.Constants;
@@ -37,7 +36,9 @@ public final class PluginBundleManager
      * <p>
      * String message to display in a Toast message.
      */
-    public static final String BUNDLE_EXTRA_STRING_MESSAGE = "com.yourcompany.yourapp.extra.STRING_MESSAGE"; //$NON-NLS-1$
+    public static final String BUNDLE_EXTRA_STRING_LANGUAGE = "com.yourcompany.yourapp.extra.STRING_LANGUAGE"; //$NON-NLS-1$
+    public static final String BUNDLE_EXTRA_STRING_COUNTRY = "com.yourcompany.yourapp.extra.STRING_COUNTRY"; //$NON-NLS-1$
+    public static final String BUNDLE_EXTRA_STRING_VARIANT = "com.yourcompany.yourapp.extra.STRING_VARIANT"; //$NON-NLS-1$
 
     /**
      * Method to verify the content of the bundle are correct.
@@ -57,13 +58,34 @@ public final class PluginBundleManager
         /*
          * Make sure the expected extras exist
          */
-        if (!bundle.containsKey(BUNDLE_EXTRA_STRING_MESSAGE))
-        {
-            if (Constants.IS_LOGGABLE)
-            {
-                Log.e(Constants.LOG_TAG, String.format("bundle must contain extra %s", BUNDLE_EXTRA_STRING_MESSAGE)); //$NON-NLS-1$
-            }
-            return false;
+        
+        String[] extras = {
+        	BUNDLE_EXTRA_STRING_LANGUAGE,
+        	BUNDLE_EXTRA_STRING_COUNTRY,
+        	BUNDLE_EXTRA_STRING_VARIANT
+        };
+        
+        for(String extra : extras ) {
+	        if (!bundle.containsKey(extra))
+	        {
+	            if (Constants.IS_LOGGABLE)
+	            {
+	                Log.e(Constants.LOG_TAG, String.format("bundle must contain extra %s", extra)); //$NON-NLS-1$
+	            }
+	            return false;
+	        }
+	        
+	        /*
+	         * Make sure the extra isn't null
+	         */
+	        if (bundle.getString(extra) == null)
+	        {
+	            if (Constants.IS_LOGGABLE)
+	            {
+	                Log.e(Constants.LOG_TAG, String.format("bundle extra %s appears to be null.  It must be a string", extra)); //$NON-NLS-1$
+	            }
+	            return false;
+	        }
         }
 
         /*
@@ -71,24 +93,12 @@ public final class PluginBundleManager
          * error message is more useful. (E.g. the caller will see what extras are missing, rather than just a message that there
          * is the wrong number).
          */
-        if (bundle.keySet().size() != 1)
+        if (bundle.keySet().size() != 3)
         {
             if (Constants.IS_LOGGABLE)
             {
-                Log.e(Constants.LOG_TAG, String.format("bundle must contain 1 key, but currently contains %d keys: %s", Integer.valueOf(bundle.keySet().size()), bundle.keySet() //$NON-NLS-1$
+                Log.e(Constants.LOG_TAG, String.format("bundle must contain 3 keys, but currently contains %d: %s", Integer.valueOf(bundle.keySet().size()), bundle.keySet() //$NON-NLS-1$
                                                                                                                                                                        .toString()));
-            }
-            return false;
-        }
-
-        /*
-         * Make sure the extra isn't null or empty
-         */
-        if (TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE)))
-        {
-            if (Constants.IS_LOGGABLE)
-            {
-                Log.e(Constants.LOG_TAG, String.format("bundle extra %s appears to be null or empty.  It must be a non-empty string", BUNDLE_EXTRA_STRING_MESSAGE)); //$NON-NLS-1$
             }
             return false;
         }
